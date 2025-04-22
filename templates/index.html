@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SurePath Lending</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+
+</head>
+<body>
+    <img class="background-image" src="{{url_for('static', filename='images/bg.webp')}}" alt="Background">
+        <div class="overlay"></div>
+        <nav>
+            <img class="logo" src="{{url_for('static', filename='images/1745250542197dlzziy61-removebg-preview.png')}}" alt="Logo">
+            <div class="nav-links">
+                <div><a href="./index.html">Home</a></div>
+                <div><a>About Us</a></div>
+                <div><a href="">Contacts</a></div>
+                <div><a href="">Login</a></div>
+                <div><a href="">SignUp</a></div>
+            </div>
+        </nav>
+        <div class="hero-text">
+            <p>For a large business? small business? Individual? Doesn’t matter!</p>
+            <h1>Your Loan Approval, Made Simple. Apply Now—It Takes Seconds.</h1>
+            <input type="button" value="Apply for a Loan" id="cta-button" class="cta-button">
+    </div>
+    <div class="modal hidden">
+        <div class="modal-content">
+            <h2>Sign Up</h2>
+            <form id="signup-form" style="justify-content: center; align-items: center; display: flex; flex-direction: column;">
+                <input id="firstName" name="firstName" type="text" placeholder="First Name" required>
+                <input id="lastName" name="lastName" type="text" placeholder="Last Name" required>
+                <input id="email" name="email" type="email" placeholder="Email Address" required>
+                <input id="password" name="password" type="password" placeholder="Password" required>
+                <button type="submit">Sign Up</button>
+                <p>Already have an account? <a id="login-link" href="#">Login</a></p>
+            </form>
+        </div>
+    </div>
+<script src="{{url_for('static', filename='script.js')}}"></script>
+</body>
+</html>
