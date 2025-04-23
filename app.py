@@ -31,6 +31,17 @@ class User(db.Model):
 
     def __repr__(self):
         return f"<User {self.firstName} {self.lastName}>"
+    
+class LoanDecision(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    credit_score = db.Column(db.Integer, nullable=False)
+    income = db.Column(db.Float, nullable=False)
+    debt = db.Column(db.Float, nullable=False)
+    decision = db.Column(db.String(50), nullable=False)
+
+
+    def __repr__(self):
+        return f"<LoanDecision {self.id} - {self.decision}>"
 
 @app.route('/')
 def index():
@@ -200,25 +211,36 @@ def make_loan_decision(user_data):
 
     if 300 <= credit_score <= 600:
         print("Declined due to low credit score.")
-        return "decline"
+        decision = "decline"
+    else:
+        decision = 'decline'
+        for index, row in loan_data.iterrows():
+            try:
+                row_credit_score = int(row['credit_score'])
+                row_income = float(row['income'])
+                row_debt = float(row['debt'])
+            except (ValueError, TypeError, KeyError):
+                continue
 
-    for index, row in loan_data.iterrows():
-        try:
-            row_credit_score = int(row['credit_score'])
-            row_income = float(row['income'])
-            row_debt = float(row['debt'])
-        except (ValueError, TypeError, KeyError):
-            continue
+            print(f"Row {index}: score>={row_credit_score}, income>={row_income}, debt<={row_debt}")
 
-        print(f"Row {index}: score>={row_credit_score}, income>={row_income}, debt<={row_debt}")
+            if credit_score >= row_credit_score and income >= row_income and debt <= row_debt:
+                decision = row.get('decision', 'decline')
+                break
 
-        if credit_score >= row_credit_score and income >= row_income and debt <= row_debt:
-            return row.get('decision', 'decline')
+    # Save the decision to the database
+    loan_decision = LoanDecision(
+        credit_score=credit_score,
+        income=income,
+        debt=debt,
+        decision=decision
+    )
+    db.session.add(loan_decision)
+    db.session.commit()
 
-    return 'decline'
+    return decision
 
 if __name__ == '__main__':
-    # Create the database tables if they don't exist
     with app.app_context():
         db.create_all()
     app.run(debug=True)

@@ -1,0 +1,12 @@
+Report:
+Group 2, 
+3 members: Agamah Lydia Agah, Okoro David Chidibere and  Nerat Dung Bali
+
+Roles of the Members:
+1. Nerat Bali Worked on the User Authentication, Database linking was responsible for ensuring that all parts of the system when integrated worked as expected.
+
+2. Okoro David Chidibere was responsible for creating the different forms for collecting the users' information (collection_of_information.html, financial_records.html and loan_application_form)
+
+3. Agamah Lydia Agah was responsible for the loan approval or decline decisions (The "Expert" part of the system) she also created the loan_result.html for displaying the decisions. Althhough the decisions do not display on the browser, it does display on the local terminal.
+
+Thank You.
