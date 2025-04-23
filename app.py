@@ -39,18 +39,15 @@ def index():
 @app.route('/signup', methods=['POST'])
 def signup():
     try:
-        # Extract form data
+        print("Form data received:", request.form)
         firstName = request.form['firstName']
         lastName = request.form['lastName']
         email = request.form['email']
         password = request.form['password']
 
-        # Check if the email already exists in the database
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
             return jsonify({'success': False, 'message': 'Email already registered'}), 400
-
-        # Add the new user to the database
         new_user = User(firstName=firstName, lastName=lastName, email=email, password=password)
         db.session.add(new_user)
         db.session.commit()
