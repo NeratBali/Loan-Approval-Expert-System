@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles1.css') }}">
+  <title>Loan Result</title>
+</head>
+<body>
+  <form action="/calculate_loan" method="POST" >
+    <div class="result-box">
+        <h2>Loan Application Result</h2>
+        <p><strong>Loan Amount:</strong> ₦{{ loan_amount:,.2f }}</p>
+        <p><strong>Repayment Duration:</strong> {{ duration }} month(s)</p>
+        <p><strong>Total Repayable:</strong> ₦{{ total_amount:,.2f }}</p>
+        <p><strong>Decision:</strong> 
+        {% if decision == 'approve' %}
+            <span class="approved">{{ decision | capitalize }}</span>
+        {% else %}
+            <span class="declined">{{ decision | capitalize }}</span>
+        {% endif %}
+        </p>
+    </div>
+  </form>
+</body>
+</html>

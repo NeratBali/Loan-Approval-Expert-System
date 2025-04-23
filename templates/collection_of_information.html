@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles1.css') }}">
+    <title>Collection of Information</title>
+</head>
+<body>
+    <div class="container">
+    <h1>Collection of Information</h1>
+    <form action="/financial_records" method="POST">
+        <label for="first_name">First Name:</label><br>
+        <input type="text" id="first_name" name="first_name" value="{{ first_name }}" required><br>
+        <label for="last_name">Last Name:</label><br>
+        <input type="text" id="last_name" name="last_name" value="{{last_name}}" required><br>
+        <label for="age_range">Age Range:</label><br>
+        <select id="age_range" name="age_range" required>
+            <option value="Select Age">Select Age</option>
+            <option value="18-25">18-25</option>
+            <option value="26-35">26-35</option>
+            <option value="36-45">36-45</option>
+            <option value="46-55">46-55</option>
+            <option value="56+">56+</option>
+        </select><br>
+        <label for="address">House Address:</label><br>
+        <input type="text" id="address" name="address" required><br>
+        <label for="state">State:</label><br>
+        <input type="text" id="state" name="state" required><br>
+        <label for="next_of_kin">Next of Kin:</label><br>
+        <input type="text" id="next_of_kin" name="next_of_kin" required><br>
+        <label for="occupation">Occupation:</label><br>
+        <input type="text" id="occupation" name="occupation" required><br><br>
+        <button type="submit">Next</button>
+    </form>
+    <div class="button-container">
+</body>
+</html>
