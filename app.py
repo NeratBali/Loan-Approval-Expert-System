@@ -39,7 +39,6 @@ def index():
 @app.route('/signup', methods=['POST'])
 def signup():
     try:
-        print("Form data received:", request.form)
         firstName = request.form['firstName']
         lastName = request.form['lastName']
         email = request.form['email']
@@ -48,15 +47,20 @@ def signup():
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
             return jsonify({'success': False, 'message': 'Email already registered'}), 400
+        
         new_user = User(firstName=firstName, lastName=lastName, email=email, password=password)
         db.session.add(new_user)
         db.session.commit()
 
-        return jsonify({'success': True, 'message': 'User signed up successfully!'})
+        # Return success with redirect instruction
+        return jsonify({
+            'success': True,
+            'message': 'User signed up successfully!',
+            'redirect': url_for('index')  # Will show login modal
+        })
     except Exception as e:
-        print(f"Error: {e}")  # Debug: Print the error
+        print(f"Error: {e}")
         return jsonify({'success': False, 'message': str(e)}), 400
-
 @app.route('/login', methods=['POST'])
 def login():
     try:
@@ -67,9 +71,8 @@ def login():
             session['user_id'] = user.id
             session['first_name'] = user.firstName
             session['last_name'] = user.lastName
-
-            return redirect(url_for('collection_of_information'))
-        return jsonify({'success': False, 'message': 'Account does not exist'}), 400
+            return redirect(url_for('collection_of_information'))  # Use route name, not template name
+        return jsonify({'success': False, 'message': 'Invalid email or password'}), 400
     except Exception as e:
         print(f"Error: {e}")
         return jsonify({'success': False, 'message': str(e)}), 400

@@ -39,13 +39,44 @@ document.addEventListener("DOMContentLoaded", () => {
         modalContent.innerHTML = `
             <h2>Login</h2>
             <form id="login-form" style="justify-content: center;align-items: center; display: flex;flex-direction: column;">
-                <input id="form-input" type="email" placeholder="Email Address" required>
-                <input id="form-input" type="password" placeholder="Password" required>
+                <input id="email" name="email" type="email" placeholder="Email Address" required>
+                <input id="password" name="password" type="password" placeholder="Password" required>
                 <button type="submit">Login</button>
                 <p>Don't have an account? <a href="#" id="signup-link">Sign Up</a></p>
             </form>
         `;
         modalContent.classList.remove("hidden");
+        const loginForm = document.getElementById('login-form');
+        if (loginForm) {
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const formData = new FormData(loginForm);
+                
+                fetch('/login', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    if (data && !data.success) {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Login failed. Please try again.');
+                });
+            });
+        }
 
             // Add event listener for switching back to the sign-up form
             const signupLink = document.getElementById("signup-link");
@@ -78,34 +109,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 }, 500);
             });
             signupForm.addEventListener("submit", (e) => {
-                e.preventDefault(); // Prevent default form submission
-            
+                e.preventDefault();
                 const formData = new FormData(signupForm);
-                for (let [key, value] of formData.entries()) {
-                    console.log(`${key}: ${value}`);
-                }
-
-        fetch("/signup", {
-            method: "POST",
-            body: formData,
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((data) => {
-                if (data.success) {
-                    alert(data.message);
-                    signupForm.reset();
-                } else {
-                    alert(`Error: ${data.message}`);
-                }
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-                alert("An error occurred. Please try again.");
+            
+                fetch("/signup", {
+                    method: "POST",
+                    body: formData,
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        alert(data.message);
+                        // Switch to login form after successful signup
+                        loginLink.click();
+                    } else {
+                        alert(`Error: ${data.message}`);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    alert("An error occurred. Please try again.");
+                });
             });
-    });
+
+ 
 });
