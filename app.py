@@ -74,7 +74,7 @@ def login():
         print(f"Error: {e}")
         return jsonify({'success': False, 'message': str(e)}), 400
 
-@app.route('/collection_of_informaton')
+@app.route('/collection_of_information')
 def collection_of_information():
     if 'user_id' not in session:
         return redirect(url_for('index'))
