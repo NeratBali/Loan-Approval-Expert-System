@@ -7,12 +7,12 @@
   <title>Loan Result</title>
 </head>
 <body>
-  <form action="/calculate_loan" method="POST" >
+  <div class="container">
     <div class="result-box">
         <h2>Loan Application Result</h2>
-        <p><strong>Loan Amount:</strong> ₦{{ loan_amount:,.2f }}</p>
+        <p><strong>Loan Amount:</strong> ₦{{ "{:,.2f}".format(loan_amount) }}</p>
         <p><strong>Repayment Duration:</strong> {{ duration }} month(s)</p>
-        <p><strong>Total Repayable:</strong> ₦{{ total_amount:,.2f }}</p>
+        <p><strong>Total Repayable:</strong> ₦{{ "{:,.2f}".format(total_amount) }}</p>
         <p><strong>Decision:</strong> 
         {% if decision == 'approve' %}
             <span class="approved">{{ decision | capitalize }}</span>
@@ -21,6 +21,6 @@
         {% endif %}
         </p>
     </div>
-  </form>
+  </div>
 </body>
 </html>

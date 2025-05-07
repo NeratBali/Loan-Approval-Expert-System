@@ -168,10 +168,7 @@ def calculate_loan():
         # Make loan decision
         decision = make_loan_decision(user_data)
 
-        # Log the values for debugging purposes
-        print(f"Loan Amount: {loan_amount}, Duration: {loan_duration}, Decision: {decision}")
-
-        # Return the result as rendered HTML
+        # Return the result as rendered HTML with all required variables
         return render_template(
             'loan_result.html',
             loan_amount=loan_amount,
